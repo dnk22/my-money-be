@@ -1,18 +1,20 @@
 import { Exclude, Expose } from 'class-transformer';
+import { FileType } from '../../files/domain/file';
+import { Role } from '../../roles/domain/role';
+import { Status } from '../../statuses/domain/status';
 import { ApiProperty } from '@nestjs/swagger';
-// import { FileType } from '../../files/domain/file';
-// import databaseConfig from '../../database/config/database.config';
-// import { DatabaseConfig } from '../../database/config/database-config.type';
+import databaseConfig from '../../database/config/database.config';
+import { DatabaseConfig } from '../../database/config/database-config.type';
 
 // <database-block>
-// const idType = (databaseConfig() as DatabaseConfig).isDocumentDatabase
-//   ? String
-//   : Number;
-// // </database-block>
+const idType = (databaseConfig() as DatabaseConfig).isDocumentDatabase
+  ? String
+  : Number;
+// </database-block>
 
 export class User {
   @ApiProperty({
-    type: String,
+    type: idType,
   })
   id: number | string;
 
@@ -53,27 +55,19 @@ export class User {
   lastName: string | null;
 
   @ApiProperty({
-    type: String,
-    example: '0988123456',
+    type: () => FileType,
   })
-  phoneNumber: string | null;
+  photo?: FileType | null;
 
   @ApiProperty({
-    type: String,
-    example: '22/07/1998',
+    type: () => Role,
   })
-  dateOfBirth: Date;
+  role?: Role | null;
 
   @ApiProperty({
-    type: Number,
-    example: '0',
+    type: () => Status,
   })
-  gender: number | null;
-
-  @ApiProperty({
-    type: () => String,
-  })
-  photo?: string | null;
+  status?: Status;
 
   @ApiProperty()
   createdAt: Date;
