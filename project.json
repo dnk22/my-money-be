@@ -1,0 +1,29 @@
+{
+  "name": "my-money-be",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "includedScripts": [],
+  "sourceRoot": "src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "my-money-be:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "my-money-be:build:development"
+        },
+        "production": {
+          "buildTarget": "my-money-be:build:production"
+        }
+      }
+    }
+  }
+}
